@@ -1,4 +1,4 @@
-# Ludo Game App Clone
+# Ludo Game App 
 
 A fully functional clone of the classic Ludo game, built with React Native. Challenge your friends or play against the computer in this engaging board game.
 

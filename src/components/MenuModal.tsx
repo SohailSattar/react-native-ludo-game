@@ -2,7 +2,7 @@ import React, { memo, useCallback } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
 import GradientButton from './GradientButton';
-import LinearGradient from 'react-native-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useAppDispatch } from '$hooks/useAppStore';
 import { announceWinner, resetGame } from '$redux/reducers/gameSlice';
 import { playSound } from '$helpers/SoundUtils';

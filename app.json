@@ -1,4 +1,16 @@
 {
-  "name": "LudoApp",
-  "displayName": "LudoApp"
+  "expo": {
+    "name": "LudoApp",
+    "slug": "ludo-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "scheme": "ludoapp",
+    "ios": {
+      "bundleIdentifier": "com.ludoapp"
+    },
+    "android": {
+      "package": "com.ludoapp"
+    }
+  }
 }

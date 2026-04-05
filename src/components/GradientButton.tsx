@@ -7,7 +7,7 @@ import {
     UsersIcon,
     HomeIcon,
 } from 'react-native-heroicons/solid';
-import LinearGradient from 'react-native-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { playSound } from '$helpers/SoundUtils';
 import { COLORS } from '$constants/colors';

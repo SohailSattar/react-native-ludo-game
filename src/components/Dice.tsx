@@ -1,6 +1,6 @@
 import { Animated, Easing, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { memo, useEffect, useRef, useState } from 'react'
-import { LinearGradient } from 'react-native-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 import { BackgroundImage } from '$helpers/GetIcon';
 import LottieView from 'lottie-react-native';
 import { ANIMATATIONS } from '$assets/animation';

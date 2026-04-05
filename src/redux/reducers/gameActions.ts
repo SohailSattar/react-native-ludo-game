@@ -6,6 +6,10 @@ import { announceWinner, disableTouch, unfreezeDice, updateFireworks, updatePlay
 
 const delay = (duration: number) => new Promise(resolve => setTimeout(resolve, duration));
 
+const playerKey = (n: number) => `player${n}` as 'player1' | 'player2' | 'player3' | 'player4';
+
+const getPlayerPieces = (game: RootState['game'], n: number): PLAYER_PIECE[] => game[playerKey(n)];
+
 const checkWinningCriteria = (pieces : any[]) => {
     for(let piece of pieces) {
         if(piece.travelCount < 57) {
@@ -30,12 +34,14 @@ export const handleForwardThunk = (playerNo: number, id: string, pos: number) =>
         dispatch(disableTouch())
 
         let finalPath = piece.pos;
-        const beforePlayerPiece = state.game[`player${playerNo}`].find((e) => e.id === id);
+        const beforePlayerPiece = getPlayerPieces(state.game, playerNo).find((e: PLAYER_PIECE) => e.id === id);
         let travelCount = beforePlayerPiece?.travelCount!;
 
         for (let i = 0; i < diceNo; i++) {
             const updatedPosition = getState();
-            const playerPiece = updatedPosition.game[`player${playerNo}`].find((e) => e.id === id);
+            const playerPiece = getPlayerPieces(updatedPosition.game, playerNo).find(
+                (e: PLAYER_PIECE) => e.id === id,
+            );
             let path = playerPiece?.pos! + 1;
             if (turningPoints.includes(path) && turningPoints[playerNo - 1] == path) {
                 path = victoryStart[playerNo - 1];
@@ -72,8 +78,8 @@ export const handleForwardThunk = (playerNo: number, id: string, pos: number) =>
 
         if (
             areDifferentIds &&
-            !safeSpots.includes(finalPath[0].pos) &&
-            !starSpots.includes(finalPath[0].pos)
+            !safeSpots.includes(finalPath) &&
+            !starSpots.includes(finalPath)
         ) {
             const enemyPiece = finalPlot.find((p) => p.id[0] !== id[0]);
             const enemyId = enemyPiece.id[0];
@@ -114,7 +120,7 @@ export const handleForwardThunk = (playerNo: number, id: string, pos: number) =>
             if (travelCount == 57) {
                 playSound('home_win');
                 const finalPlayerState = getState();
-                const playerAllPieces = finalPlayerState.game[`player${playerNo}`];
+                const playerAllPieces = getPlayerPieces(finalPlayerState.game, playerNo);
 
                 if (checkWinningCriteria(playerAllPieces)) {
                     dispatch(announceWinner(playerNo))

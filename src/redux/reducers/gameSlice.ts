@@ -40,7 +40,7 @@ const gameSlice = createSlice({
         },
         updatePlayerPieceValue: (state, action) => {
             const { playerNo, pieceId, pos, travelCount } = action.payload;
-            const playerPieces : any[] = state[playerNo];
+            const playerPieces = state[playerNo as keyof INITIAL_STATE] as PLAYER_PIECE[];
             const piece = playerPieces.find((p) => p.id === pieceId)
             state.pileSelectionPlayer = -1;
 
@@ -55,9 +55,9 @@ const gameSlice = createSlice({
                     }
                 } else {
                     if(currentPositionIdx !== -1){
-                        state.currentPosition[currentPositionIdx] = { id: pieceId, pos };
+                        state.currentPosition[currentPositionIdx] = { id: pieceId, pos, travelCount };
                     } else {
-                        state.currentPosition.push({ id : pieceId, pos });
+                        state.currentPosition.push({ id: pieceId, pos, travelCount });
                     }
                 }
             }

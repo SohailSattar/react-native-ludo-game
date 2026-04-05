@@ -3,7 +3,7 @@ import React, { memo, useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
 import { useDispatch } from 'react-redux';
-import LinearGradient from 'react-native-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 import LottieView from 'lottie-react-native';
 import GradientButton from './GradientButton';
 import Pile from './Pile';
@@ -53,7 +53,13 @@ const WinnerModal: React.FC<{ winner: any }> = ({ winner }) => {
             >
                 <View style={styles.content}>
                     <View style={styles.pileContainer}>
-                        <Pile player={1} color={COLORS.borderColor} />
+                        <Pile
+                            player={1}
+                            color={COLORS.borderColor}
+                            cell={false}
+                            pieceId="winner-decor"
+                            onPress={() => {}}
+                        />
                     </View>
 
                     <Text style={styles.congratsText}> Congratulations! PLAYER {winner}</Text>

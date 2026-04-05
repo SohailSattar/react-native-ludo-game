@@ -95,9 +95,9 @@ const HomeScreen = () => {
     }
 
     const cleanUpAnimation = () => {
-      Animated.timing(withAnim).stop();
-      Animated.timing(scaleXAnim).stop();
-    }
+      withAnim.stopAnimation();
+      scaleXAnim.stopAnimation();
+    };
 
     loopAnimation();
 

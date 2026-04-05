@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, type ViewStyle } from 'react-native'
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { COLORS } from '$constants/colors'
 import LottieView from 'lottie-react-native'
@@ -21,22 +21,24 @@ interface FourTriangleProps {
 
 interface PlayerPiecesItem {
     player: PLAYER_PIECE[];
+    pilePlayerId: number;
     top: number;
     left: number;
     right: number;
     bottom: number;
     pieceColor: string;
-    translate: any;
+    translate: 'translateX' | 'translateY';
 }
 
 interface PlayerPiecesProps {
     player: PLAYER_PIECE[];
+    pilePlayerId: number;
     style: any;
     pieceColor: string;
-    translate: any;
+    translate: 'translateX' | 'translateY';
 }
 
-const PlayerPieces: React.FC<PlayerPiecesProps> = memo(({ player, style, pieceColor, translate }) => {
+const PlayerPieces: React.FC<PlayerPiecesProps> = memo(({ player, pilePlayerId, style, pieceColor, translate }) => {
     return (
         <View style={[styles.mainContainer, style]}>
             {player.map((piece, idx) => {
@@ -44,17 +46,24 @@ const PlayerPieces: React.FC<PlayerPiecesProps> = memo(({ player, style, pieceCo
                     <View
                         pointerEvents={'none'}
                         key={piece.id}
-                        style={{
-                            top: 0,
-                            zIndex: 99,
-                            position: 'absolute',
-                            bottom: 0,
-                            transform: [{ scale: 0.5 }, { [translate]: 14 * idx }]
-                        }}
+                        style={
+                            {
+                                top: 0,
+                                zIndex: 99,
+                                position: 'absolute',
+                                bottom: 0,
+                                transform: [
+                                    { scale: 0.5 },
+                                    translate === 'translateX'
+                                        ? { translateX: 14 * idx }
+                                        : { translateY: 14 * idx },
+                                ],
+                            } as ViewStyle
+                        }
                     >
                         <Pile
                             cell={true}
-                            player={player}
+                            player={pilePlayerId}
                             onPress={() => null}
                             pieceId={piece.id}
                             color={pieceColor}
@@ -89,39 +98,43 @@ const FourTriangle: React.FC<FourTriangleProps> = ({ player1, player2, player3, 
         () => [
             {
                 player: player1,
+                pilePlayerId: 1,
                 top: 55,
                 left: 15,
                 right: 0,
                 bottom: 0,
                 pieceColor: COLORS.red,
-                translate: 'translateX'
+                translate: 'translateX',
             },
             {
                 player: player3,
+                pilePlayerId: 3,
                 top: 52,
                 left: 15,
                 right: 0,
                 bottom: 0,
                 pieceColor: COLORS.yellow,
-                translate: 'translateX'
+                translate: 'translateX',
             },
             {
                 player: player2,
+                pilePlayerId: 2,
                 top: 20,
                 left: -2,
                 right: 0,
                 bottom: 0,
                 pieceColor: COLORS.green,
-                translate: 'translateY'
+                translate: 'translateY',
             },
             {
                 player: player3,
+                pilePlayerId: 3,
                 top: 20,
                 left: -2,
                 right: 0,
                 bottom: 0,
                 pieceColor: COLORS.blue,
-                translate: 'translateX'
+                translate: 'translateX',
             },
         ],
         [player1, player2, player3, player4])
@@ -130,6 +143,7 @@ const FourTriangle: React.FC<FourTriangleProps> = ({ player1, player2, player3, 
         return (
             <PlayerPieces
                 key={index}
+                pilePlayerId={data.pilePlayerId}
                 player={data.player.filter((e) => e.travelCount === 57)}
                 style={{
                     top: data.top,
@@ -138,7 +152,7 @@ const FourTriangle: React.FC<FourTriangleProps> = ({ player1, player2, player3, 
                     right: data.right,
                 }}
                 pieceColor={data.pieceColor}
-                translate={data.pieceColor}
+                translate={data.translate}
             />
         )
     }, [playersData])

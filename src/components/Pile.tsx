@@ -22,7 +22,10 @@ const Pile: React.FC<PileProp> = ({ color, player, cell, pieceId, onPress }) => 
     const currentPlayerPileSelection = useAppSelector(selectPocketPileSelection);
     const currentPlayerCellSelection = useAppSelector(selectCellSelection);
     const diceNo = useAppSelector(selectDiceNo);
-    const playerPieces = useAppSelector((state: RootState) => state.game[`player${player}`]);
+    const playerPieces = useAppSelector((state: RootState) => {
+        const key = `player${player}` as 'player1' | 'player2' | 'player3' | 'player4';
+        return state.game[key];
+    });
 
     const isPileEnabled = useMemo(() => player === currentPlayerPileSelection, [currentPlayerPileSelection, player]);
     const isCellEnabled = useMemo(() => player === currentPlayerCellSelection, [currentPlayerCellSelection, player]);

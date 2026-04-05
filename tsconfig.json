@@ -1,11 +1,12 @@
 {
   "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
+    "strict": false,
+    "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "baseUrl": "./",
     "allowJs": false,
-    "types": ["react-native", "react-native-web", "jest"],
     "jsx": "react-native",
     "noImplicitAny": true,
     "moduleResolution": "Bundler",
@@ -19,8 +20,8 @@
       "$helpers/*": ["src/helpers/*"],
       "$components/*": ["src/components/*"],
       "$hooks/*": ["src/hooks/*"],
-      "$navigation/*": ["src/navigation/*"],
-    },
-    "typeRoots": ["declaration.d.ts"]
-  }
+      "$navigation/*": ["src/navigation/*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx", "declaration.d.ts"]
 }
